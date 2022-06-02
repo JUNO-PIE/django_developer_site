@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 페이지</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div>환영합니다 {{user.username}}님</div>
+    <a href="{% url 'logout' %}">로그아웃</a>
+    {% else %}
+    <a href="{% url 'login' %}">로그인</a>
+    {% endif %}
+
+    {% for post in posts %}
+    <div>ID: {{post.id}}</div>
+    <div>제목: {{post.title}}</div>
+    <div>날짜: {{post.date}}</div>
+    <div>내용: {{post.content}}</div>
+    {% if post.image %}
+    <img scr="{{post.image.url}}" width="200px">
+    {% else %}
+    <div>이미지가 없습니다.</div>
+    {% endif %}
+    <a href="{% url 'update' post.id %}">수정</a>
+    <a href="{% url 'delete' post.id %}">삭제</a>
+    <hr>
+    {% endfor %}
+</body>
+</html>
